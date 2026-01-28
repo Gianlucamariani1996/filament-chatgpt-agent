@@ -2,6 +2,7 @@
 
 namespace LikeABas\FilamentChatgptAgent\Components;
 
+use LikeABas\FilamentChatgptAgent\ChatgptAgentPlugin;
 use LikeABas\FilamentChatgptAgent\ChatgptChat;
 use Livewire\Attributes\Session;
 use Livewire\Component;
@@ -24,7 +25,7 @@ class ChatgptAgent extends Component
 
     public string $questionContext;
 
-    public string $pageWatcherEnabled;
+    public bool $pageWatcherEnabled;
 
     public string $pageWatcherSelector;
 
@@ -38,32 +39,25 @@ class ChatgptAgent extends Component
 
     public string|bool $logoUrl;
 
-    private string $sessionKey;
-
-    public function __construct()
-    {
-        $this->sessionKey = auth()->id() . '-chatgpt-agent-messages';
-    }
-
     public function mount(): void
     {
-        $this->panelHidden = session($this->sessionKey . '-panelHidden', true);
-        $this->winWidth = "width:" . filament('chatgpt-agent')->getDefaultPanelWidth() . ";";
-        $this->winPosition = session($this->sessionKey . '-winPosition', '');
+        $this->panelHidden = session($this->sessionKey() . '-panelHidden', true);
+        $this->winWidth = "width:" . $this->plugin()->getDefaultPanelWidth() . ";";
+        $this->winPosition = session($this->sessionKey() . '-winPosition', '');
         $this->showPositionBtn = true;
         $this->messages = session(
-            $this->sessionKey,
+            $this->sessionKey(),
             $this->getDefaultMessages()
         );
         $this->question = "";
-        $this->name = filament('chatgpt-agent')->getBotName();
-        $this->buttonText = filament('chatgpt-agent')->getButtonText();
-        $this->buttonIcon = filament('chatgpt-agent')->getButtonIcon();
-        $this->sendingText = filament('chatgpt-agent')->getSendingText();
+        $this->name = $this->plugin()->getBotName();
+        $this->buttonText = $this->plugin()->getButtonText();
+        $this->buttonIcon = $this->plugin()->getButtonIcon();
+        $this->sendingText = $this->plugin()->getSendingText();
         $this->questionContext = '';
-        $this->pageWatcherEnabled = filament('chatgpt-agent')->isPageWatcherEnabled();
-        $this->pageWatcherSelector = filament('chatgpt-agent')->getPageWatcherSelector();
-        $this->logoUrl = filament('chatgpt-agent')->getLogoUrl();
+        $this->pageWatcherEnabled = $this->plugin()->isPageWatcherEnabled();
+        $this->pageWatcherSelector = $this->plugin()->getPageWatcherSelector();
+        $this->logoUrl = $this->plugin()->getLogoUrl();
     }
 
     public function render()
@@ -89,11 +83,11 @@ class ChatgptAgent extends Component
 
     public function changeWinWidth(): void
     {
-        if ($this->winWidth == "width:" . filament('chatgpt-agent')->getDefaultPanelWidth() . ";") {
+        if ($this->winWidth == "width:" . $this->plugin()->getDefaultPanelWidth() . ";") {
             $this->winWidth = "width:100%;";
             $this->showPositionBtn = false;
         } else {
-            $this->winWidth = "width:" . filament('chatgpt-agent')->getDefaultPanelWidth() . ";";
+            $this->winWidth = "width:" . $this->plugin()->getDefaultPanelWidth() . ";";
             $this->showPositionBtn = true;
         }
     }
@@ -105,19 +99,19 @@ class ChatgptAgent extends Component
         } else {
             $this->winPosition = "";
         }
-        session([$this->sessionKey . '-winPosition' => $this->winPosition]);
+        session([$this->sessionKey() . '-winPosition' => $this->winPosition]);
     }
 
     public function resetSession(): void
     {
-        request()->session()->forget($this->sessionKey);
+        request()->session()->forget($this->sessionKey());
         $this->messages = $this->getDefaultMessages();
     }
 
     public function togglePanel(): void
     {
         $this->panelHidden = !$this->panelHidden;
-        session([$this->sessionKey . '-panelHidden' => $this->panelHidden]);
+        session([$this->sessionKey() . '-panelHidden' => $this->panelHidden]);
     }
 
     protected function chat(): void
@@ -125,7 +119,7 @@ class ChatgptAgent extends Component
         $chat = new ChatgptChat();
         $chat->loadMessages($this->messages);
         if ($this->pageWatcherEnabled) {
-            $chat->addMessage(filament('chatgpt-agent')->getPageWatcherMessage() . $this->questionContext);
+            $chat->addMessage($this->plugin()->getPageWatcherMessage() . $this->questionContext);
             \Log::info($this->questionContext);
         }
 
@@ -133,15 +127,25 @@ class ChatgptAgent extends Component
 
         $this->messages[] = ['role' => 'assistant', 'content' => $chat->latestMessage()->content];
 
-        request()->session()->put($this->sessionKey, $this->messages);
+        request()->session()->put($this->sessionKey(), $this->messages);
 
     }
 
     protected function getDefaultMessages(): array
     {
-        return filament('chatgpt-agent')->getStartMessage() ?
+        return $this->plugin()->getStartMessage() ?
             [
-                ['role' => 'assistant', 'content' => filament('chatgpt-agent')->getStartMessage()],
+                ['role' => 'assistant', 'content' => $this->plugin()->getStartMessage()],
             ] : [];
+    }
+
+    protected function plugin(): ChatgptAgentPlugin
+    {
+        return ChatgptAgentPlugin::get() ?? ChatgptAgentPlugin::make();
+    }
+
+    protected function sessionKey(): string
+    {
+        return auth()->id() . '-chatgpt-agent-messages';
     }
 }

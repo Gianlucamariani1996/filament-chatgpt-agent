@@ -3,6 +3,7 @@
 namespace LikeABas\FilamentChatgptAgent;
 
 use Filament\Contracts\Plugin;
+use Filament\Facades\Filament;
 use Filament\Panel;
 use Closure;
 
@@ -28,6 +29,19 @@ class ChatgptAgentPlugin implements Plugin
     public static function make(): static
     {
         return app(static::class);
+    }
+
+    public static function get(): ?self
+    {
+        $panel = Filament::getCurrentPanel();
+
+        if (! $panel) {
+            return null;
+        }
+
+        $plugin = $panel->getPlugin('chatgpt-agent');
+
+        return $plugin instanceof self ? $plugin : null;
     }
 
     public function getId(): string
