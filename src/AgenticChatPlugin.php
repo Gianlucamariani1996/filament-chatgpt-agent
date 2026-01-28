@@ -1,13 +1,13 @@
 <?php
 
-namespace LikeABas\FilamentChatgptAgent;
+namespace FilamentAgenticChat;
 
 use Filament\Contracts\Plugin;
 use Filament\Facades\Filament;
 use Filament\Panel;
 use Closure;
 
-class ChatgptAgentPlugin implements Plugin
+class AgenticChatPlugin implements Plugin
 {
     protected bool|Closure|null $enabled = null;
     protected string|Closure|null $botName = null;

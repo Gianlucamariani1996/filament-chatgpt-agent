@@ -1,5 +1,5 @@
 <div>
-    @php($plugin = \LikeABas\FilamentChatgptAgent\ChatgptAgentPlugin::get())
+    @php($plugin = \FilamentAgenticChat\AgenticChatPlugin::get())
     @if($plugin?->isEnabled())
         @livewire('fi-chatgpt-agent')
     @endif

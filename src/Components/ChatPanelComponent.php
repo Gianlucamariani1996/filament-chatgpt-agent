@@ -1,13 +1,13 @@
 <?php
 
-namespace LikeABas\FilamentChatgptAgent\Components;
+namespace FilamentAgenticChat\Components;
 
-use LikeABas\FilamentChatgptAgent\ChatgptAgentPlugin;
-use LikeABas\FilamentChatgptAgent\ChatgptChat;
+use FilamentAgenticChat\AgenticChatPlugin;
+use FilamentAgenticChat\Services\ChatServices;
 use Livewire\Attributes\Session;
 use Livewire\Component;
 
-class ChatgptAgent extends Component
+class ChatPanelComponent extends Component
 {
 
     public string $name;
@@ -116,7 +116,7 @@ class ChatgptAgent extends Component
 
     protected function chat(): void
     {
-        $chat = new ChatgptChat();
+        $chat = new ChatServices();
         $chat->loadMessages($this->messages);
         if ($this->pageWatcherEnabled) {
             $chat->addMessage($this->plugin()->getPageWatcherMessage() . $this->questionContext);
@@ -139,9 +139,9 @@ class ChatgptAgent extends Component
             ] : [];
     }
 
-    protected function plugin(): ChatgptAgentPlugin
+    protected function plugin(): AgenticChatPlugin
     {
-        return ChatgptAgentPlugin::get() ?? ChatgptAgentPlugin::make();
+        return AgenticChatPlugin::get() ?? AgenticChatPlugin::make();
     }
 
     protected function sessionKey(): string

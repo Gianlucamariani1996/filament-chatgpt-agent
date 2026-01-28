@@ -78,14 +78,14 @@ Modify your Filament [Panel Configuration](https://laravel-filament.cn/docs/en/3
 
 
 ```php
-use LikeABas\FilamentChatgptAgent\ChatgptAgentPlugin;
+use FilamentAgenticChat\AgenticChatPlugin;
 
     public function panel(Panel $panel): Panel
     {
         return $panel
             ...
             ->plugin(
-                ChatgptAgentPlugin::make()
+                AgenticChatPlugin::make()
             )
             ...
     }
@@ -97,7 +97,7 @@ Also see [all available options](#available-options) below.
 
 ```php
 use App\GPT\Functions\YourCustomGPTFunction;
-use LikeABas\FilamentChatgptAgent\ChatgptAgentPlugin;
+use FilamentAgenticChat\AgenticChatPlugin;
 
 ...
 
@@ -106,7 +106,7 @@ use LikeABas\FilamentChatgptAgent\ChatgptAgentPlugin;
         return $panel
             ...
             ->plugin(
-                ChatgptAgentPlugin::make()
+                AgenticChatPlugin::make()
                     ->defaultPanelWidth('400px') // default 350px
                     ->botName('GPT Assistant')
                     ->model('gpt-4o')

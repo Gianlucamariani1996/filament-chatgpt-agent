@@ -1,13 +1,7 @@
 {
-    "name": "likeabas/filament-chatgpt-agent",
-    "description": "Integrate with OpenAI ChatGPT",
+    "name": "discovery/filament-agentic-chat",
+    "description": "Agentic Chat",
     "version": "1.0.3",
-    "keywords": [
-        "likeabas",
-        "laravel",
-        "filament-chatgpt-agent"
-    ],
-    "homepage": "https://github.com/likeabas/filament-chatgpt-agent",
     "license": "MIT",
     "require": {
         "php": ">=8.0",
@@ -29,12 +23,12 @@
     },
     "autoload": {
         "psr-4": {
-            "LikeABas\\FilamentChatgptAgent\\": "src"
+            "FilamentAgenticChat\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "LikeABas\\FilamentChatgptAgent\\Tests\\": "tests"
+            "FilamentAgenticChat\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -54,10 +48,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "LikeABas\\FilamentChatgptAgent\\FilamentChatgptAgentServiceProvider"
+                "FilamentAgenticChat\\FilamentAgenticChatServiceProvider"
             ],
             "aliases": {
-                "FilamentChatgptAgent": "LikeABas\\FilamentChatgptAgent\\Facades\\FilamentChatgptAgent"
+                "FilamentChatgptAgent": "FilamentAgenticChat\\Facades\\FilamentChatgptAgent"
             }
         }
     },

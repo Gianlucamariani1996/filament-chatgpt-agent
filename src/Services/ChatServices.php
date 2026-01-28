@@ -1,14 +1,15 @@
 <?php
 
-namespace LikeABas\FilamentChatgptAgent;
+namespace FilamentAgenticChat\Services;
 
 use Prism\Prism\Enums\Provider;
 use Prism\Prism\Facades\Prism;
 use Prism\Prism\ValueObjects\Messages\AssistantMessage;
 use Prism\Prism\ValueObjects\Messages\SystemMessage;
 use Prism\Prism\ValueObjects\Messages\UserMessage;
+use FilamentAgenticChat\AgenticChatPlugin;
 
-class ChatgptChat
+class ChatServices
 {
     /**
      * @var array<int, array{role: string, content: string}>
@@ -17,9 +18,9 @@ class ChatgptChat
 
     protected ?string $latestResponse = null;
 
-    protected function plugin(): ChatgptAgentPlugin
+    protected function plugin(): AgenticChatPlugin
     {
-        return ChatgptAgentPlugin::get() ?? ChatgptAgentPlugin::make();
+        return AgenticChatPlugin::get() ?? AgenticChatPlugin::make();
     }
 
     public function addMessage(string $content, string $role = 'system'): void

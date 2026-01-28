@@ -1,13 +1,13 @@
 <?php
 
-namespace LikeABas\FilamentChatgptAgent;
+namespace FilamentAgenticChat;
 
-use LikeABas\FilamentChatgptAgent\Components\ChatgptAgent;
+use FilamentAgenticChat\Components\ChatPanelComponent;
 use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class FilamentChatgptAgentServiceProvider extends PackageServiceProvider
+class FilamentAgenticChatServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
@@ -27,7 +27,7 @@ class FilamentChatgptAgentServiceProvider extends PackageServiceProvider
      */
     public function packageBooted(): void
     {
-        Livewire::component('fi-chatgpt-agent', ChatgptAgent::class);
+        Livewire::component('fi-chatgpt-agent', ChatPanelComponent::class);
     }
 
 }
