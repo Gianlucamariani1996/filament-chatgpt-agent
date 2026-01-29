@@ -4,7 +4,7 @@
     $panelSide = $winPosition == 'left' ? 'left' : 'right';
 @endphp
 <div class="relative w-full" id="chatgpt-agent-window" style="{{ $winWidth }}">
-    <div class="fixed z-0 cursor-pointer" style="bottom: 1rem; right: 1rem;">
+    <div class="fixed z-0 cursor-pointer" style="bottom: 1.1rem; right: 1rem;">
         <x-filament::button wire:click="togglePanel" id="btn-chat" :icon="$buttonIcon" :color="$panelHidden ? 'primary' : 'gray'">
             {{ $panelHidden ? $buttonText : __('chatgpt-agent::translations.close') }}
         </x-filament::button>
