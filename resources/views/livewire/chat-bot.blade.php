@@ -4,14 +4,14 @@
     $panelSide = $winPosition == 'left' ? 'left' : 'right';
 @endphp
 <div class="relative w-full" id="chatgpt-agent-window" style="{{ $winWidth }}">
-    <div class="fixed -z-10 cursor-pointer" style="bottom: 1rem; right: 1rem;">
+    <div class="fixed z-0 cursor-pointer" style="bottom: 1rem; right: 1rem;">
         <x-filament::button wire:click="togglePanel" id="btn-chat" :icon="$buttonIcon" :color="$panelHidden ? 'primary' : 'gray'">
             {{ $panelHidden ? $buttonText : __('chatgpt-agent::translations.close') }}
         </x-filament::button>
     </div>
 
     <x-filament::section
-        class="flex-1 p-2 sm:p-6 justify-between max-h-screen fixed {{ $winPosition == 'left' ? 'left-0' : 'right-0' }} bottom-0 bg-white shadow -z-20 dark:bg-gray-900 {{ $panelHidden ? 'hidden' : '' }}"
+        class="flex-1 p-2 sm:p-6 justify-between max-h-screen fixed {{ $winPosition == 'left' ? 'left-0' : 'right-0' }} bottom-0 bg-white shadow dark:bg-gray-900 {{ $panelHidden ? 'hidden' : '' }}"
         style="{{ $winWidth }}" id="chat-window">
         <x-slot name="heading" :icon="$buttonIcon" icon-size="md">
             {{ $name }}
