@@ -30,10 +30,9 @@
         </x-slot>
 
         <div id="messages"
-            wire:scroll
             wire:key="chatgpt-agent-messages"
-            style="overflow: auto; padding-bottom: 1rem; margin-bottom: 65px;"
-            class="flex flex-1 min-h-0 flex-col space-y-4 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
+            style="overflow: auto; min-height: max(20rem, 30vh); max-height: calc(100vh - 11rem); padding-bottom: 1rem; margin-bottom: 65px;"
+            class="flex flex-col space-y-4 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
             @foreach ($messages as $message)
                 @if ($message['role'] !== 'system')
                     <div wire:key="chatgpt-agent-message-{{ $loop->index }}">
